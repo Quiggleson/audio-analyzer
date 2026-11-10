@@ -1,5 +1,5 @@
 {
-  "name": "specbook",
+  "name": "audio-analyzer",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -7,10 +7,14 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit",
-    "bench": "vitest bench --run"
+    "check:deps": "node scripts/check-deps.mjs",
+    "verify": "npm run check:deps && npm run typecheck && npm test"
   },
   "devDependencies": {
-    "typescript": "^5.6.0",
-    "vitest": "^2.1.0"
+    "typescript": "7.0.2",
+    "vitest": "5.1.0"
+  },
+  "engines": {
+    "node": ">=22"
   }
 }

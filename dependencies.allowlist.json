@@ -1,0 +1,17 @@
+{
+  "_comment": "Every package in package.json must be listed here. Adding a package means adding it here first, in its own commit, with evidence it exists and is maintained (npm view <name> version time.modified). Versions below were checked against the npm registry on the date shown.",
+  "verifiedOn": "2026-11-10",
+  "packages": {
+    "typescript": { "version": "7.0.2", "purpose": "Type checking. Strict mode is what catches invented APIs." },
+    "vitest": { "version": "5.1.0", "purpose": "Unit tests." },
+    "vite": { "version": "8.3.7", "purpose": "Dev server and build." },
+    "@vitejs/plugin-react": { "version": "6.3.0", "purpose": "React support in Vite." },
+    "react": { "version": "19.3.1", "purpose": "UI." },
+    "react-dom": { "version": "19.3.1", "purpose": "UI." },
+    "zustand": { "version": "5.1.0", "purpose": "App state store." },
+    "markdown-it": { "version": "15.0.3", "purpose": "Render notes." },
+    "dompurify": { "version": "3.4.17", "purpose": "Sanitise rendered notes before they go into a shared file." },
+    "idb-keyval": { "version": "6.3.0", "purpose": "Autosave to IndexedDB." },
+    "@playwright/test": { "version": "1.65.0", "purpose": "Browser smoke tests." }
+  }
+}
