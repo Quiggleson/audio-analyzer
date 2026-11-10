@@ -98,7 +98,9 @@ These replace the vague word "splice". The owner's use cases are:
     the highlight or delete everything except the highlight.** The copy points
     at the same source recording, so copying is cheap and the original track
     is untouched. The deletion is stored as an edit on the track, not applied
-    to the audio, so it can be undone.
+    to the audio, so it can be undone. Deleting a stretch of time leaves a
+    gap; nothing closes up by itself. The owner drags one side over to close
+    the gap if they want it closed. Deleting a lasso silences that patch.
 24. **Playback always stops at the end of the track or highlight.** No
     looping and no slow-motion playback. The owner presses play when ready to
     listen closely and does not want a loop to distract.
@@ -108,7 +110,9 @@ These replace the vague word "splice". The owner's use cases are:
 25. **Notes are the markdown cells.** They sit above and below the
     spectrograms they discuss, like a textbook page. Pages can link to each
     other wiki-style, and text can link to a highlight; following that link
-    shows the highlight and can play it.
+    shows the highlight and can play it. The owner names a highlight (for
+    example "harsh s") and links to it by name: `[[Page]]`, `[[#harsh s]]`,
+    `[[Page#harsh s]]`. Renaming keeps links working.
 26. **The view of each spectrogram cell is saved**, so reopening the project
     shows the same place and settings.
 27. **Autosave goes to the browser's IndexedDB, with a visible reminder to
@@ -134,10 +138,11 @@ These replace the vague word "splice". The owner's use cases are:
     file in as the microphone (verified 2026-11-10: a 440 Hz file came back
     as 440 Hz at the right level with voice processing off). The repo is
     public, so no recording of the owner's voice is ever committed.
-32. **Each task ends with a checklist of use cases the owner tries by hand.**
-    Automated tests cannot judge whether something looks or sounds right; the
-    owner can. A task is done when `npm run verify` passes and the checklist
-    is written; the owner signs it off before the next task starts.
+32. **One task, one pull request, one owner checklist.** Each task ends with
+    a checklist of use cases the owner tries by hand. Automated tests cannot
+    judge whether something looks or sounds right; the owner can. The work is
+    delivered as a pull request with that checklist in its description. The
+    owner reviews, tries it, and merges; the next task starts after that.
 33. **Small on purpose.** The owner dislikes Audacity because it is old,
     clunky and full of features they do not care about. Build only what the
     task asks for. Do not add options, menus or settings "for completeness".
@@ -150,7 +155,29 @@ These replace the vague word "splice". The owner's use cases are:
 
 35. **Priority, most important first:** saved analyses (export and re-import,
     so the owner can pick up where they left off), the compare loop, notes,
-    lasso listening, sharing. Overlays come last. `PLAN.md` follows this.
+    lasso listening, sharing. `PLAN.md` follows this.
+
+## Added in the second interview round
+
+36. **Nothing is drawn over the spectrogram except the owner's own highlights,
+    the playback cursor and piece edges.** No pitch lines, formant lines or
+    other analysis overlays; the owner does not want the picture cluttered.
+    A text readout under the picture shows time, frequency and loudness at
+    the pointer.
+37. **Shapes are anchored to the recording, not the timeline.** A highlight is
+    stored in seconds into its source, so it moves with its sound when a
+    track or a piece is slid.
+38. **Every source is stored as mono, 16-bit.** Stereo files are averaged on
+    import. Analysis only needs one channel, and rounding once at intake
+    makes save, export and re-import bit-exact. The cost is that imported
+    music plays back in mono.
+39. **Several projects.** The start screen is a plain list; each project is
+    exported separately.
+40. **Recording controls:** a microphone picker and a level meter; one key
+    starts recording and the same key stops it; no countdown.
+41. **A built-in starter notebook teaches by having the owner record.** For
+    example: say "ssss", and the text explains the hiss they see. It ships no
+    audio. It is the last task.
 
 ## Out of scope
 
@@ -160,5 +187,7 @@ These replace the vague word "splice". The owner's use cases are:
 - Editing by the recipient of a shared file.
 - Automatic alignment of two tracks.
 - Looping and slow-motion playback.
+- Pitch, formant or other analysis overlays on the spectrogram.
+- Closing gaps automatically after a deletion.
 - A history of takes.
 - Phones and tablets, for editing.

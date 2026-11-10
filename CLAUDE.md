@@ -12,28 +12,37 @@ no backend.
 ## Every session
 
 1. Read `PLAN.md`. Work on the first task that is not done, unless the user
-   names a different one.
-2. Read that task's file in `docs/tasks/` in full. Read `docs/decisions.md`
-   before changing anything it covers, and `docs/design.md` before building
-   anything the owner will see.
-3. Before you finish: `npm run verify` passes, `PLAN.md` is updated, the task
-   file's handoff notes say what the next session needs, any lessons are
-   recorded (see Lessons), and the work is committed.
+   names a different one. One task is one session and one pull request.
+2. Read `docs/tasks/README.md`, then that task's file in full. Read
+   `docs/architecture.md` and the decisions the task lists before writing
+   code, and `docs/design.md` before building anything the owner will see.
+3. Work on a branch named after the task file. Before you finish:
+   `npm run verify:all` passes, `PLAN.md` is updated, the task file's handoff
+   notes are filled in, any lessons are recorded (see Lessons), and a pull
+   request is open with the task's owner checklist in its description.
+4. Do not merge the pull request and do not start the next task. The owner
+   tries the checklist by hand and merges.
 
 ## Commands
 
-- `npm run verify` — dependency check, lessons check, type check and tests. This is the
-  definition of "it works". Run it before every commit.
-- `npm test`, `npm run typecheck`, `npm run check:deps`, `npm run check:lessons` —
-  the parts on their own.
+- `npm run verify` — dependency check, lessons check, type check and unit
+  tests. Fast; run it often.
+- `npm run verify:all` — `verify`, then a production build, then the browser
+  tests. This is the definition of "it works". Task 01 creates it; until then
+  `verify` is the bar.
+- `npm test`, `npm run typecheck`, `npm run check:deps`, `npm run check:lessons`
+  — the parts on their own.
 
 ## Layout
 
-- `src/dsp/` — pure maths (FFT, spectrogram, masks). No DOM, no Web Audio, no
-  imports from other `src/` folders, so it runs in plain Node tests.
-- Planned: `src/model/` (project document), `src/audio/` (record, decode,
-  playback), `src/render/` (WebGL drawing), `src/ui/` (React). `dsp` and
-  `model` import nothing from the other three.
+`docs/architecture.md` has the full picture. In short:
+
+- `src/dsp/` — pure maths (FFT, spectrogram, masks). Imports nothing.
+- `src/model/` — the project document, edits, undo, rendering a track to
+  samples, export and import. Pure; imports only `dsp`.
+- `src/audio/`, `src/render/`, `src/store/`, `src/ui/` — the browser side.
+- Put behaviour in `dsp` or `model` whenever you can. Code there is proven by
+  unit tests in plain Node; everything else needs a browser to check.
 
 ## Rules
 
@@ -56,12 +65,16 @@ tools three major versions out of date, from memory. So:
 - Before you finish, look at every import you added and confirm each one
   resolves to a real file or an allowlisted package.
 
-**Positions are seconds and Hz, never pixels or frame indexes.** Every lasso,
-highlight, clip boundary and note anchor is stored in seconds and Hz, so it
-survives zooming, a different window size, and reopening the project later.
+**Positions are seconds and Hz, never pixels or frame indexes.** Every
+highlight, mute and piece boundary is stored in seconds (into its source
+recording) and Hz, so it survives zooming, a different window size, sliding
+the track, and reopening the project later.
 
-**Nothing destroys audio.** Source recordings are never modified. Trimming and
-splicing are ranges that point into a source. User edits can be undone.
+**Nothing destroys audio.** Source recordings are never modified. Deleting and
+trimming are edits stored on the track. User edits can be undone.
+
+**Nothing is drawn over the spectrogram** except the owner's highlights, the
+playback cursor and piece edges. No analysis overlays.
 
 **Decisions in `docs/decisions.md` are settled.** If one looks wrong, stop and
 tell the user why. Do not work around it.
