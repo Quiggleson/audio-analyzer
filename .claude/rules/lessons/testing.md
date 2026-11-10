@@ -13,6 +13,7 @@ paths:
 Why: on 2026-11-10 a test made about 200,000 `expect` calls and took 1.7 s.
 Check: compute a worst case (min, max, largest error) in the loop and assert
 on it once afterwards.
+Last mattered: 2026-11-10
 
 ## Known traps, not yet hit
 

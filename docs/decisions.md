@@ -94,12 +94,10 @@ one looks wrong, stop and raise it with the owner; do not work around it.
     They cannot edit, lasso or record: the point is to show an analysis
     without giving enough freedom to break the example.
 24. **Autosave goes to the browser's IndexedDB.**
-
-## Open
-
-- **Project file for backup or moving between machines.** The owner likes a
-  single file. Not yet decided whether the shared HTML doubles as that file
-  (re-importable) or a separate format is used. Decide before task 07.
+25. **The shared HTML file is also the project file.** The app can re-import
+    it and get the full editable project back, so one format serves sharing,
+    backup and moving between machines. The file must therefore carry
+    everything needed to edit, not only what the read-only viewer shows.
 
 ## Out of scope
 

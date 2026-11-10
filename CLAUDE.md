@@ -18,9 +18,10 @@ as one read-only HTML file. It has one user (the repo owner) and no backend.
 
 ## Commands
 
-- `npm run verify` — dependency check, type check and tests. This is the
+- `npm run verify` — dependency check, lessons check, type check and tests. This is the
   definition of "it works". Run it before every commit.
-- `npm test`, `npm run typecheck`, `npm run check:deps` — the parts on their own.
+- `npm test`, `npm run typecheck`, `npm run check:deps`, `npm run check:lessons` —
+  the parts on their own.
 
 ## Layout
 
@@ -76,6 +77,14 @@ attempt, or when something behaved differently from what you expected.
 1. First ask whether a test or a check could catch it next time. If so, write
    that instead; a check cannot be forgotten.
 2. Otherwise add it to the matching area file, or create a new file with a
-   `paths:` list. Write the rule, why it exists (what happened and when), and
-   how to check you followed it.
-3. Keep each file under 60 lines. Delete a lesson once a check enforces it.
+   `paths:` list. Write the rule in bold, then `Why:` (what happened and
+   when), `Check:` (how to confirm you followed it), and
+   `Last mattered: YYYY-MM-DD`.
+3. When a lesson changes what you do, or would have prevented a mistake you
+   just made, set its `Last mattered` to today. Being loaded does not count.
+4. Each file is capped at 60 lines; `npm run verify` enforces it. When a file
+   is full, make room in this order: turn a lesson into a check and delete it,
+   merge two that say the same thing, delete the one with the oldest
+   `Last mattered`. Never raise the cap.
+5. When a task finishes, delete any "known trap" in its area that a test now
+   covers.

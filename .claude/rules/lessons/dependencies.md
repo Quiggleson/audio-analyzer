@@ -15,6 +15,7 @@ Why: on 2026-11-10 the first commit pinned Vitest 2 and TypeScript 5 from
 memory. The registry had Vitest 5 and TypeScript 7.
 Check: `npm view <name> version` before writing a version; `npm run check:deps`
 fails on a major that differs from the allowlist.
+Last mattered: 2026-11-10
 
 **A package that looks standard may be abandoned.**
 Why: on 2026-11-10 an undo helper for the state store was proposed from
@@ -22,6 +23,7 @@ memory. Its last publish was two years earlier, so it was dropped and undo is
 written in the repo.
 Check: `npm view <name> time.modified deprecated`. Older than 18 months or
 deprecated means do not add it.
+Last mattered: 2026-11-10
 
 ## Known traps, not yet hit
 
