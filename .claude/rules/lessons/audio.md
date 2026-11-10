@@ -26,3 +26,9 @@ None yet.
   one `when` taken from the same context's `currentTime`. Starting them in
   separate calls with no `when` lets them drift apart.
 - Drive the playback cursor from `AudioContext.currentTime`, not from timers.
+- The owner uses Brave. Its fingerprinting protection is reported to alter
+  audio data slightly when a page reads it back through Web Audio. This is
+  NOT verified here. If the owner sees a spectrogram that differs from the
+  tests, ask them to try with Shields off for the site before debugging.
+- The microphone and the `AudioContext` can run at different sample rates
+  (seen 2026-11-10: a 48000 Hz input arrived in a 44100 Hz context).

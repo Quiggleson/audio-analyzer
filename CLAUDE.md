@@ -1,17 +1,21 @@
 # audio-analyzer
 
 A local-first browser app for studying short voice and music recordings through
-spectrograms. The owner records or imports a clip, pans and zooms the
-spectrogram, lassos a region to hear only that part, lines up two tracks to
-compare them, attaches markdown notes to regions, and shares the whole project
-as one read-only HTML file. It has one user (the repo owner) and no backend.
+spectrograms. A project is a notebook: pages of markdown text with live
+spectrograms in between. The owner records or imports a clip, pans and zooms,
+highlights a region to hear only that part, lines up two tracks to compare
+them, writes notes around what they find, and exports the whole project as one
+HTML file that can be re-imported or sent to someone as a read-only notebook.
+It has one user (the repo owner, who runs it locally in Brave on Debian) and
+no backend.
 
 ## Every session
 
 1. Read `PLAN.md`. Work on the first task that is not done, unless the user
    names a different one.
 2. Read that task's file in `docs/tasks/` in full. Read `docs/decisions.md`
-   before changing anything it covers.
+   before changing anything it covers, and `docs/design.md` before building
+   anything the owner will see.
 3. Before you finish: `npm run verify` passes, `PLAN.md` is updated, the task
    file's handoff notes say what the next session needs, any lessons are
    recorded (see Lessons), and the work is committed.
@@ -61,6 +65,9 @@ splicing are ranges that point into a source. User edits can be undone.
 
 **Decisions in `docs/decisions.md` are settled.** If one looks wrong, stop and
 tell the user why. Do not work around it.
+
+**Small on purpose.** Build only what the task asks for. No extra options,
+menus or settings. The owner wants a few things they know well.
 
 **Say what actually happened.** If a test fails or a step was skipped, report
 that with the output. Do not weaken or delete a test to make it pass.

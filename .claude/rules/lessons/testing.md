@@ -26,3 +26,7 @@ Last mattered: 2026-11-10
   the installed Playwright version can differ from the pinned one (1.63.0 was
   installed when 1.65.0 was current). Do not run `playwright install`. If the
   versions differ, launch with `executablePath: '/opt/pw-browsers/chromium'`.
+- To test recording, launch Chromium with `--use-fake-device-for-media-stream`,
+  `--use-fake-ui-for-media-stream` and
+  `--use-file-for-fake-audio-capture=<absolute path to a WAV>`. Verified
+  2026-11-10. The page must be served from `localhost`, not `file://`.

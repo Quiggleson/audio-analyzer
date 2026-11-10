@@ -44,9 +44,10 @@ one looks wrong, stop and raise it with the owner; do not work around it.
    back to audio and plays the result. It is not a real-time filter. Measured:
    a 60 s clip analyses in about 0.4 s and resynthesises in about 0.5 s, so a
    typical 10 s clip is around 150 ms.
-10. **It is a listening aid, not an editor.** The owner circles something to
-    hear what it is, then listens for it in the full recording. Selecting a
-    plain time range across all frequencies is supported the same way.
+10. **It is mainly a listening aid.** The owner circles something to hear
+    what it is, then listens for it in the full recording. Selecting a plain
+    time range across all frequencies is supported the same way. The same
+    shapes drive the track edits in decision 23.
 
 ## Recordings
 
@@ -64,40 +65,92 @@ one looks wrong, stop and raise it with the owner; do not work around it.
 
 ## Document model
 
-15. **A project has sections. A section is a stack of tracks on one shared
-    timeline.** Solo analysis is a section with one track. "Add track" works
-    any number of times; the layout is designed for two.
-16. **A track holds exactly one recording and a slide offset.** Record or
-    import fills it. Re-record replaces it. There is no history of takes: the
-    owner re-records only because the last attempt was bad.
-17. **Re-record can be undone during the session and is not kept after.**
+15. **A project is a notebook.** It has pages; a page is a list of cells; a
+    cell is either markdown text or a spectrogram. The owner chose "a notebook
+    with spectrograms in it" over "a spectrogram with notes beside it". The
+    look to aim for is described in `docs/design.md`.
+16. **A spectrogram cell is a stack of tracks on one shared timeline**, with
+    its own view (time and frequency range, display settings) and its own
+    shapes. Solo analysis is a cell with one track. "Add track" works any
+    number of times; the layout is designed for two.
+17. **A track holds exactly one recording, a slide offset and a list of
+    edits.** Record or import fills it. Re-record replaces it. There is no
+    history of takes: the owner re-records only because the last attempt was
+    bad.
+18. **Re-record can be undone during the session and is not kept after.**
     Shapes on a re-recorded track stay where they are; if any exist, ask
     before replacing.
-18. **Alignment is manual.** The owner drags a track left or right until the
+19. **Alignment is manual.** The owner drags a track left or right until the
     bright parts line up. No automatic time-warping.
-19. **The comparison loop is the main control surface.** One key each for:
+20. **The comparison loop is the main control surface.** One key each for:
     play the reference, play mine, play both, re-record. "Both" can put one
     track in each ear.
-20. **Recording while another track plays is supported**, for singing along in
+21. **Recording while another track plays is supported**, for singing along in
     headphones. Recording lag is corrected with the same slide.
 
-## Notes and sharing
+## Highlights and track edits
 
-21. **Notes are wiki-style markdown attached to shapes and to the project.**
-    A note can link to another note and to a shape; following a shape link
-    moves the view there and can play it.
-22. **Saved views.** The owner can return to the same place and settings in a
-    later session.
-23. **Sharing exports the whole project as one self-contained, read-only HTML
-    file** with the viewer, audio, shapes and notes inside. It works when
-    emailed or put on any static host. The recipient can view, play and pan.
-    They cannot edit, lasso or record: the point is to show an analysis
-    without giving enough freedom to break the example.
-24. **Autosave goes to the browser's IndexedDB.**
-25. **The shared HTML file is also the project file.** The app can re-import
-    it and get the full editable project back, so one format serves sharing,
-    backup and moving between machines. The file must therefore carry
-    everything needed to edit, not only what the read-only viewer shows.
+These replace the vague word "splice". The owner's use cases are:
+
+22. **Highlight part of a track and play only that.** A highlight is a time
+    range or a lasso. Play with a highlight active plays only the highlight.
+23. **Copy a track to a new track, highlight part of it, then either delete
+    the highlight or delete everything except the highlight.** The copy points
+    at the same source recording, so copying is cheap and the original track
+    is untouched. The deletion is stored as an edit on the track, not applied
+    to the audio, so it can be undone.
+24. **Playback always stops at the end of the track or highlight.** No
+    looping and no slow-motion playback. The owner presses play when ready to
+    listen closely and does not want a loop to distract.
+
+## Notes, saving and sharing
+
+25. **Notes are the markdown cells.** They sit above and below the
+    spectrograms they discuss, like a textbook page. Pages can link to each
+    other wiki-style, and text can link to a highlight; following that link
+    shows the highlight and can play it.
+26. **The view of each spectrogram cell is saved**, so reopening the project
+    shows the same place and settings.
+27. **Autosave goes to the browser's IndexedDB, with a visible reminder to
+    export.** Browser storage can be cleared without warning; the owner
+    accepted that with the reminder.
+28. **Export produces one self-contained HTML file, and the app can re-import
+    it** to get the full editable project back. One format serves saving,
+    backup, moving between machines and sharing, so the file carries
+    everything needed to edit.
+29. **Opened on its own, the exported file is a read-only notebook** with the
+    whole project inside. The recipient can read, play and pan. They cannot
+    edit, lasso or record: the point is to show an analysis without giving
+    enough freedom to break the example.
+
+## How the work is run and checked
+
+30. **The owner runs the app locally on Debian in Brave.** Brave is built on
+    Chromium, the same engine the automated browser tests use. Editing is
+    supported on desktop Chromium-family browsers only. Nothing may depend on
+    an API that Brave disables by default, such as the File System Access API.
+31. **Automated tests use generated audio, never real recordings.** Analysis
+    tests use signals with known answers. Browser tests feed a generated WAV
+    file in as the microphone (verified 2026-11-10: a 440 Hz file came back
+    as 440 Hz at the right level with voice processing off). The repo is
+    public, so no recording of the owner's voice is ever committed.
+32. **Each task ends with a checklist of use cases the owner tries by hand.**
+    Automated tests cannot judge whether something looks or sounds right; the
+    owner can. A task is done when `npm run verify` passes and the checklist
+    is written; the owner signs it off before the next task starts.
+33. **Small on purpose.** The owner dislikes Audacity because it is old,
+    clunky and full of features they do not care about. Build only what the
+    task asks for. Do not add options, menus or settings "for completeness".
+34. **The owner is learning.** They know that different parts of a
+    spectrogram carry different information about speech, and little more.
+    Use plain words in the interface, and where a technical term is needed
+    (formant, harmonic, fricative), say what it means where it appears.
+
+## Order of work
+
+35. **Priority, most important first:** saved analyses (export and re-import,
+    so the owner can pick up where they left off), the compare loop, notes,
+    lasso listening, sharing. Overlays come last. `PLAN.md` follows this.
 
 ## Out of scope
 
@@ -106,3 +159,6 @@ one looks wrong, stop and raise it with the owner; do not work around it.
 - Accounts, a server, or collaboration.
 - Editing by the recipient of a shared file.
 - Automatic alignment of two tracks.
+- Looping and slow-motion playback.
+- A history of takes.
+- Phones and tablets, for editing.
