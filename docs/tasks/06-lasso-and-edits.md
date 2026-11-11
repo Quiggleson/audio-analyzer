@@ -32,8 +32,12 @@ are time ranges. `renderTrack` handles pieces, offset and fades.
    by 2 frames and 3 bins, convert back, and return the span. Cache the result
    until the shape or source changes. This is independent of the display's
    window size.
-3. **Copy track.** Inserts a duplicate below: new ids, the same `sourceId`,
-   copies of the pieces, mutes and highlights.
+3. **Copy track.** "Copy track" remembers the track. "Add track" in any
+   spectrogram cell, on any page, then offers to paste a copy of it. The copy
+   has new ids, the same `sourceId`, and copies of the pieces, mutes and
+   highlights. Pasting into the same cell is how the owner gets a working
+   copy to edit; pasting into another cell is how they show the same
+   recording twice, for example an overview and a zoomed-in figure.
 4. **Two edit actions**, shown only while a highlight is active on a track:
    - **Delete highlight.**
      Range: split the pieces so that source range is no longer on the track.
@@ -95,6 +99,8 @@ All in plain Node unless marked.
 - [ ] I switch to lasso, circle a bright patch, press Space, and hear only
       that patch. It may sound thin or ringing; that is expected.
 - [ ] I circle the hiss of an "s" and can hear that it is the "s".
+- [ ] I copy a track into a second spectrogram cell further down the page and
+      zoom that one in, so the page shows an overview and a close-up.
 - [ ] I copy a track, drag across a word on the copy, choose "Keep only
       highlight", and the copy now holds just that word. The original is
       unchanged.

@@ -46,8 +46,10 @@ step proves your renderer on top of that.
    - Request the microphone with echo cancellation, noise suppression and
      automatic gain all off. Read back the track's settings and tell the
      owner in plain words if any stayed on.
-   - Recording into a track that already has a recording replaces it. If the
-     track has named highlights, ask first.
+   - Recording into a track that already has a recording replaces it and
+     removes the track's highlights, because they described the old sound. If
+     the track has any, ask first. Ctrl+Z brings back both within the
+     session.
 4. **Render (`src/model/`, pure).** `renderTrack` as described in the
    architecture file: pieces, offset, 5 ms fades. Mutes come in task 06, but
    write the function so they slot in.
@@ -59,18 +61,21 @@ step proves your renderer on top of that.
    `#21918c`, `#5ec962`, `#fde725`, dark for quiet. Time axis in seconds and
    frequency axis in kHz, labelled.
 7. **View.** Default: the whole clip, 0 to 8 kHz, linear, `fftSize` 1024.
-   - The cell must not hijack page scrolling. The wheel zooms only after the
-     cell has been clicked; Escape or a click elsewhere releases it.
-   - Wheel zooms time around the pointer. Ctrl+wheel zooms frequency.
-     Horizontal scroll or dragging the time axis pans.
+   - The plain wheel never affects the spectrogram; it always scrolls the
+     page. There is no click-to-focus mode.
+   - Shift+wheel pans in time. Ctrl+wheel zooms time around the pointer.
+     Ctrl+Shift+wheel zooms frequency. Stop the browser's own page zoom for
+     Ctrl+wheel only while the pointer is over a spectrogram.
+   - Dragging the time axis also pans.
    - Controls, kept few: window size (label it by what it does, "sharper in
      time" to "sharper in pitch", and say in a short hint that short windows
      show the broad bands of vowels and long windows show the fine stripes of
      pitch), linear or log, and a brightness range.
    - The view and display settings are saved in the document without adding
      undo entries.
-8. **Play.** Space plays from the cursor to the end and stops. Space while
-   playing stops. Clicking sets the cursor. The cursor line follows playback,
+8. **Play.** Space plays from the cursor to the end and stops. When playback
+   stops by itself, the cursor goes back to where it started, so Space plays
+   the same thing again. Space while playing stops. Clicking sets the cursor. The cursor line follows playback,
    driven by the audio clock. No looping.
 9. **Highlight.** Dragging across the spectrogram makes a time-range
    highlight. While one is active, Space plays only that range. A name field
@@ -99,7 +104,10 @@ step proves your renderer on top of that.
 - Browser: importing a generated WAV creates a source with the right length.
 - Browser: recording from the fake microphone for about one second creates a
   source of about one second whose dominant frequency is about 440 Hz.
-- Browser: play reaches the end and stops by itself. With a highlight of
+- Browser: a plain wheel event over the spectrogram leaves the view
+  unchanged; Shift+wheel changes the time range.
+- Browser: play reaches the end and stops by itself, and the cursor is back
+  where it started. With a highlight of
   known length, playback lasts about that long.
 - `npm run verify:all` passes.
 
@@ -110,7 +118,11 @@ step proves your renderer on top of that.
 - [ ] I import a music file and its spectrogram appears. A long file warns me
       but still loads.
 - [ ] Scrolling the page with the pointer over a spectrogram scrolls the
-      page. After I click the spectrogram, the wheel zooms it instead.
+      page and leaves the spectrogram alone, every time.
+- [ ] Shift+wheel slides the spectrogram along in time. Ctrl+wheel zooms in
+      and out in time, and Ctrl+Shift+wheel zooms frequency. I note here if
+      either zoom gesture feels wrong.
+- [ ] After playback stops at the end, Space plays the same stretch again.
 - [ ] Zooming and panning feel smooth, and the axes stay correct.
 - [ ] Space plays from where I clicked and stops at the end without looping.
 - [ ] I drag across one word, press Space, and hear only that word.

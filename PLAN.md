@@ -19,12 +19,19 @@ Status is one of: `done`, `in progress`, `not started`.
 | 07 | Sharing: the exported file opens as a read-only notebook | not started | `docs/tasks/07-sharing.md` |
 | 08 | Starter notebook that teaches by recording | not started | `docs/tasks/08-starter-notebook.md` |
 
+**Before starting task 02 or later:** check the Open section at the end of
+`docs/decisions.md`. The highlight model and the play keys are being revised,
+and tasks 02, 04, 05, 06 and 07 will change once they are settled. Task 01
+is not affected.
+
 The order follows the owner's priorities (decision 35 in `docs/decisions.md`).
 
 ## Log
 
 Newest first. One line per finished task or notable event.
 
+- 2026-11-11 — Sync quiz with the owner: decisions 42 to 47 added; the
+  highlight model and play keys reopened (see Open in the decisions file).
 - 2026-11-10 — Task files 01 to 08 written. Analysis overlays dropped from
   the plan at the owner's request; a starter notebook added as task 08.
 - 2026-11-10 — Plan reordered after the owner ranked priorities and chose the

@@ -44,9 +44,10 @@ a hosted viewer or add a package without the owner's agreement.
 2. **Read-only means:**
    - No editing of text, pages, cells, tracks or highlights.
    - No record, import, lasso, edit actions, slide or piece dragging.
-   - Yes: page navigation, outline, links, playing tracks and highlights
-     with the same keys, pan, zoom and display controls, the readout, theme
-     toggle. View changes are not saved.
+   - Yes: page navigation, outline, links, clicking to place the cursor and
+     playing from there, playing tracks with the same keys, pan, zoom and
+     display controls, the readout, theme toggle. View changes are not saved.
+   - The reader cannot make a selection of their own.
    - Pass read-only down as a prop or context. Hide controls that do nothing;
      do not show them disabled.
 3. **Export includes the viewer.** At export time the app fetches the built

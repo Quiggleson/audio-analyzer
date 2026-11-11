@@ -78,8 +78,8 @@ one looks wrong, stop and raise it with the owner; do not work around it.
     history of takes: the owner re-records only because the last attempt was
     bad.
 18. **Re-record can be undone during the session and is not kept after.**
-    Shapes on a re-recorded track stay where they are; if any exist, ask
-    before replacing.
+    Re-recording removes the track's highlights, because they described the
+    old sound; if any exist, ask before replacing.
 19. **Alignment is manual.** The owner drags a track left or right until the
     bright parts line up. No automatic time-warping.
 20. **The comparison loop is the main control surface.** One key each for:
@@ -178,6 +178,44 @@ These replace the vague word "splice". The owner's use cases are:
 41. **A built-in starter notebook teaches by having the owner record.** For
     example: say "ssss", and the text explains the hiss they see. It ships no
     audio. It is the last task.
+
+## Added after the sync quiz (2026-11-11)
+
+The owner answered scenario questions against the plan. These settle the
+places where the two differed.
+
+42. **When playback stops at the end, the cursor goes back to where playback
+    started**, so pressing Space again replays the same thing.
+43. **The plain wheel never affects a spectrogram.** It always scrolls the
+    page, so reading is never interrupted. Shift+wheel pans the spectrogram in
+    time. Ctrl+wheel zooms time around the pointer and Ctrl+Shift+wheel zooms
+    frequency. There is no click-to-focus mode. (The owner chose Shift+wheel;
+    the two zoom gestures are a proposal for the owner to try in task 02.)
+44. **A track can be copied into another spectrogram cell.** This is how the
+    owner shows an overview of a recording and, further down the page, a
+    zoomed-in figure of the same recording. The copy shares the source.
+45. **In a shared file the reader can click to place the cursor and play from
+    there.** They cannot make selections.
+46. **Links from text point at ids, never at names.** Renaming can therefore
+    never break a link. Deleting the target leaves a dead link, shown as dead.
+47. **Following a link keeps the current zoom** and scrolls the spectrogram so
+    the target is at the start of the view.
+
+## Open
+
+Do not build anything that depends on these until they are settled here.
+
+- **What a highlight is.** The owner's picture differs from the plan's
+  "named highlight". They do not attach notes to highlights; a paragraph says
+  something like "look at 0:13, see this pattern" and points at a place. The
+  likely shape is two things: a temporary selection (for playing only that
+  and for edits) and a saved place that text links to. Tasks 02, 05, 06 and
+  07 and the `Highlight` type in `docs/architecture.md` still describe the
+  old model.
+- **Play keys with several tracks.** The owner expects that pressing track 2's
+  key while track 1 plays makes both play. Task 04 still says any play key
+  stops playback.
+- **Mono storage of imported music** (decision 38) has not been confirmed.
 
 ## Out of scope
 
